@@ -15,7 +15,7 @@ git add -A .
 git commit -m "update"
 git push
 git checkout master
-rsync -av --exclude='_book' --exclude='.git' --exclude='node_modules' --exclude='README.md' ../../gitbook/zhangjk/algorithm-learn/ .
+rsync -av --exclude='_book' --exclude='.git' --exclude='node_modules' ../../gitbook/zhangjk/algorithm-learn/ .
 cp SUMMARY.md README.md
 git add -A .
 git commit -m "update"
