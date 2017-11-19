@@ -1,0 +1,656 @@
+
+<!DOCTYPE HTML>
+<html lang="zh-hans" >
+    <head>
+        <meta charset="UTF-8">
+        <meta content="text/html; charset=utf-8" http-equiv="Content-Type">
+        <title>并查集 · algorithm learn</title>
+        <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+        <meta name="description" content="">
+        <meta name="generator" content="GitBook 3.2.2">
+        <meta name="author" content="zhangjikai">
+        
+        
+    
+    <link rel="stylesheet" href="../gitbook/style.css">
+
+    
+            
+                
+                <link rel="stylesheet" href="../gitbook/gitbook-plugin-search-plus/search.css">
+                
+            
+                
+                <link rel="stylesheet" href="../gitbook/gitbook-plugin-prism/prism-base16-ateliersulphurpool.light.css">
+                
+            
+                
+                <link rel="stylesheet" href="../gitbook/gitbook-plugin-anchors/plugin.css">
+                
+            
+                
+                <link rel="stylesheet" href="../gitbook/gitbook-plugin-disqus/plugin.css">
+                
+            
+                
+                <link rel="stylesheet" href="../gitbook/gitbook-plugin-anchor-navigation-ex/style/plugin.css">
+                
+            
+                
+                <link rel="stylesheet" href="../gitbook/gitbook-plugin-fancybox/jquery.fancybox.css">
+                
+            
+                
+                <link rel="stylesheet" href="../gitbook/gitbook-plugin-fancybox/jquery.fancybox-buttons.css">
+                
+            
+                
+                <link rel="stylesheet" href="../gitbook/gitbook-plugin-katex/katex.min.css">
+                
+            
+                
+                <link rel="stylesheet" href="../gitbook/gitbook-plugin-fontsettings/website.css">
+                
+            
+        
+
+    
+
+    
+        
+        <link rel="stylesheet" href="../styles/website.css">
+        
+    
+        
+    
+        
+    
+        
+    
+        
+    
+        
+    
+
+        
+    
+    
+    
+    
+    <meta name="HandheldFriendly" content="true"/>
+    <meta name="viewport" content="width=device-width, initial-scale=1, user-scalable=no">
+    <meta name="apple-mobile-web-app-capable" content="yes">
+    <meta name="apple-mobile-web-app-status-bar-style" content="black">
+    <link rel="apple-touch-icon-precomposed" sizes="152x152" href="../gitbook/images/apple-touch-icon-precomposed-152.png">
+    <link rel="shortcut icon" href="../gitbook/images/favicon.ico" type="image/x-icon">
+
+    
+    
+    <link rel="prev" href="../" />
+    
+
+    <style>
+    @media only screen and (max-width: 640px) {
+        .book-header .hidden-mobile {
+            display: none;
+        }
+    }
+    </style>
+    <script>
+        window["gitbook-plugin-github-buttons"] = {"repo":"zhangjikai/algorithm-learn","types":["star"],"size":"small"};
+    </script>
+
+    
+        <link rel="shortcut icon" href='../favicon.ico' type="image/x-icon">
+    
+    
+        <link rel="bookmark" href='../favicon.ico' type="image/x-icon">
+    
+    
+    
+
+    </head>
+    <body>
+        
+<div class="book">
+    <div class="book-summary">
+        
+            
+<div id="book-search-input" role="search">
+    <input type="text" placeholder="输入并搜索" />
+</div>
+
+            
+                <nav role="navigation">
+                
+
+
+<ul class="summary">
+    
+    
+    
+        
+        <li>
+            <a href="http://www.zhangjikai.com" target="_blank" class="custom-link">Home</a>
+        </li>
+    
+    
+
+    
+    <li class="divider"></li>
+    
+
+    
+        
+        
+    
+        <li class="chapter " data-level="1" data-path="../">
+            
+                <a href="../">
+            
+                    
+                        <b>1.</b>
+                    
+                    前言
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter active" data-level="2" data-path="./">
+            
+                <a href="./">
+            
+                    
+                        <b>2.</b>
+                    
+                    并查集
+            
+                </a>
+            
+
+            
+        </li>
+    
+
+    
+
+    <li class="divider"></li>
+
+    <li>
+        <a href="https://www.gitbook.com" target="blank" class="gitbook-link">
+            本书使用 GitBook 发布
+        </a>
+    </li>
+</ul>
+
+
+                </nav>
+            
+        
+    </div>
+
+    <div class="book-body">
+        
+            <div class="body-inner">
+                
+                    
+
+<div class="book-header" role="navigation">
+    
+
+    <!-- Title -->
+    <h1>
+        <i class="fa fa-circle-o-notch fa-spin"></i>
+        <a href=".." >并查集</a>
+    </h1>
+</div>
+
+
+
+
+                    <div class="page-wrapper" tabindex="-1" role="main">
+                        <div class="page-inner">
+                            
+<div id="book-search-results">
+    <div class="search-noresults">
+    
+                                <section class="normal markdown-section">
+                                
+                                <div id="anchor-navigation-ex-navbar"><i class="fa fa-anchor"></i><ul><li><a href="#&#x5E76;&#x67E5;&#x96C6;&#x7B97;&#x6CD5;">&#x5E76;&#x67E5;&#x96C6;&#x7B97;&#x6CD5;</a></li><ul><li><a href="#&#x52A8;&#x6001;&#x8FDE;&#x901A;&#x6027;">&#x52A8;&#x6001;&#x8FDE;&#x901A;&#x6027;</a></li><li><a href="#&#x7B97;&#x6CD5;&#x5B9E;&#x73B0;">&#x7B97;&#x6CD5;&#x5B9E;&#x73B0;</a></li><li><a href="#&#x5B8C;&#x6574;&#x5B9E;&#x73B0;">&#x5B8C;&#x6574;&#x5B9E;&#x73B0;</a></li></ul></ul></div><a href="#&#x5E76;&#x67E5;&#x96C6;&#x7B97;&#x6CD5;" id="anchorNavigationExGoTop"><i class="fa fa-arrow-up"></i></a><h1 id="&#x5E76;&#x67E5;&#x96C6;&#x7B97;&#x6CD5;"><a name="&#x5E76;&#x67E5;&#x96C6;&#x7B97;&#x6CD5;" class="anchor-navigation-ex-anchor" href="#&#x5E76;&#x67E5;&#x96C6;&#x7B97;&#x6CD5;"><i class="fa fa-link" aria-hidden="true"></i></a>&#x5E76;&#x67E5;&#x96C6;&#x7B97;&#x6CD5;</h1>
+<!-- toc -->
+<ul>
+<li><a href="#&#x52A8;&#x6001;&#x8FDE;&#x901A;&#x6027;">&#x52A8;&#x6001;&#x8FDE;&#x901A;&#x6027;</a></li>
+<li><a href="#&#x7B97;&#x6CD5;&#x5B9E;&#x73B0;">&#x7B97;&#x6CD5;&#x5B9E;&#x73B0;</a></li>
+<li><a href="#&#x5B8C;&#x6574;&#x5B9E;&#x73B0;">&#x5B8C;&#x6574;&#x5B9E;&#x73B0;</a></li>
+</ul>
+<!-- tocstop -->
+<h2 id="&#x52A8;&#x6001;&#x8FDE;&#x901A;&#x6027;"><a name="&#x52A8;&#x6001;&#x8FDE;&#x901A;&#x6027;" class="anchor-navigation-ex-anchor" href="#&#x52A8;&#x6001;&#x8FDE;&#x901A;&#x6027;"><i class="fa fa-link" aria-hidden="true"></i></a>&#x52A8;&#x6001;&#x8FDE;&#x901A;&#x6027;</h2>
+<p>&#x7ED9;&#x5B9A;&#x4E00;&#x4E9B;&#x5BF9;&#x8C61;&#xFF0C;&#x8FD9;&#x4E9B;&#x5BF9;&#x8C61;&#x4E2D;&#x7684;&#x67D0;&#x4E9B;&#x5BF9;&#x8C61;&#x5B58;&#x5728; <code>&#x8FDE;&#x901A;</code> &#x7684;&#x5173;&#x7CFB;&#xFF0C;&#x8FD9;&#x91CC;&#x6211;&#x4EEC;&#x5047;&#x8BBE; <code>&#x8FDE;&#x901A;</code> &#x5173;&#x7CFB;&#x662F;&#x4E00;&#x79CD;&#x7B49;&#x4EF7; (equivalence) &#x5173;&#x7CFB;&#xFF1A;</p>
+<ul>
+<li>&#x81EA;&#x53CD;&#x6027; (Reflexive): p &#x548C; p &#x662F;&#x76F8;&#x8FDE;&#x7684;</li>
+<li>&#x5BF9;&#x79F0;&#x6027; (Symmetric): &#x5982;&#x679C; p &#x548C; q &#x76F8;&#x8FDE;&#xFF0C;&#x90A3;&#x4E48; q &#x548C; p &#x4E5F;&#x662F;&#x76F8;&#x8FDE;&#x7684;</li>
+<li>&#x4F20;&#x9012;&#x6027; (Transitive): &#x5982;&#x4F55; p &#x548C; q &#x76F8;&#x8FDE;&#x5E76;&#x4E14; q &#x548C; r &#x4E5F;&#x662F;&#x76F8;&#x8FDE;&#x7684;&#xFF0C;&#x90A3;&#x4E48; p &#x548C; r &#x4E5F;&#x662F;&#x76F8;&#x8FDE;&#x7684;&#x3002;</li>
+</ul>
+<p>&#x7B49;&#x4EF7;&#x5173;&#x7CFB;&#x53EF;&#x4EE5;&#x5C06;&#x5BF9;&#x8C61;&#x5206;&#x4E3A;&#x591A;&#x4E2A;&#x7B49;&#x4EF7;&#x7C7B;&#x3002;&#x5728;&#x8FD9;&#x91CC;&#xFF0C;&#x5F53;&#x4E14;&#x4EC5;&#x5F53;&#x4E24;&#x4E2A;&#x5BF9;&#x8C61;&#x76F8;&#x8FDE;&#x65F6;&#x5B83;&#x4EEC;&#x624D;&#x5C5E;&#x4E8E;&#x540C;&#x4E00;&#x4E2A;&#x7B49;&#x4EF7;&#x7C7B;&#x3002;&#x5728;&#x52A8;&#x6001;&#x8FDE;&#x901A;&#x6027;&#x95EE;&#x9898;&#x4E2D;&#xFF0C;&#x5BF9;&#x4E8E;&#x7ED9;&#x5B9A;&#x7684;&#x4E24;&#x70B9; p &#x548C; q&#xFF0C;&#x6211;&#x4EEC;&#x9700;&#x8981;&#x5224;&#x65AD; p &#x548C; q &#x662F;&#x5426;&#x76F8;&#x8FDE;&#xFF0C;&#x540C;&#x65F6;&#x5BF9;&#x8C61;&#x4E4B;&#x95F4;&#x7684;&#x8FDE;&#x901A;&#x5173;&#x7CFB;&#x4F1A;&#x52A8;&#x6001;&#x7684;&#x53D1;&#x751F;&#x53D8;&#x5316;&#x3002;</p>
+<h2 id="&#x7B97;&#x6CD5;&#x5B9E;&#x73B0;"><a name="&#x7B97;&#x6CD5;&#x5B9E;&#x73B0;" class="anchor-navigation-ex-anchor" href="#&#x7B97;&#x6CD5;&#x5B9E;&#x73B0;"><i class="fa fa-link" aria-hidden="true"></i></a>&#x7B97;&#x6CD5;&#x5B9E;&#x73B0;</h2>
+<p>&#x4E0B;&#x9762;&#x662F;&#x7B97;&#x6CD5;&#x7684; API&#xFF1A;</p>
+<p>     <a href="../images/union-find/api.png" rel="grouped" title="" target="_self" class="fancybox">
+       <img src="../images/union-find/api.png" alt="">
+     </a></p>
+<p>&#x5176;&#x4E2D; <code>connected</code> &#x548C; <code>count</code> &#x5B9E;&#x73B0;&#x6BD4;&#x8F83;&#x7B80;&#x5355;&#xFF1A;</p>
+<pre class="language-"><code class="lang-java"><span class="token keyword">public</span> <span class="token keyword">boolean</span> <span class="token function">connected</span><span class="token punctuation">(</span><span class="token keyword">int</span> p<span class="token punctuation">,</span> <span class="token keyword">int</span> q<span class="token punctuation">)</span> <span class="token punctuation">{</span>
+    <span class="token keyword">return</span> <span class="token function">find</span><span class="token punctuation">(</span>p<span class="token punctuation">)</span> <span class="token operator">==</span> <span class="token function">find</span><span class="token punctuation">(</span>q<span class="token punctuation">)</span><span class="token punctuation">;</span>
+<span class="token punctuation">}</span>
+
+<span class="token keyword">public</span> <span class="token keyword">int</span> <span class="token function">count</span><span class="token punctuation">(</span><span class="token punctuation">)</span> <span class="token punctuation">{</span>
+    <span class="token keyword">return</span> count<span class="token punctuation">;</span>
+<span class="token punctuation">}</span>
+</code></pre>
+<p>&#x5BF9;&#x4E8E;&#x5408;&#x5E76;&#x548C;&#x67E5;&#x627E;&#x8FD9;&#x91CC;&#x4E3B;&#x8981;&#x8BB0;&#x5F55;&#x4E00;&#x4E0B; <code>weighted quick-union</code> &#x7B97;&#x6CD5;&#x3002;&#x5728;&#x8BE5;&#x7B97;&#x6CD5;&#x4E2D;&#xFF0C;&#x4F7F;&#x7528;&#x4E00;&#x4E2A;&#x6570;&#x7EC4; sites &#x6765;&#x5B58;&#x50A8;&#x70B9;&#xFF0C;&#x901A;&#x8FC7;&#x6A21;&#x62DF;&#x68EE;&#x6797;&#x6765;&#x8868;&#x793A;&#x8FDE;&#x901A;&#x5173;&#x7CFB;&#xFF0C;&#x68EE;&#x6797;&#x4E2D;&#x7684;&#x6BCF;&#x68F5;&#x6811;&#x90FD;&#x8868;&#x793A;&#x4E00;&#x4E2A;&#x8FDE;&#x901A;&#x5206;&#x91CF;&#x3002;&#x5BF9;&#x4E8E;&#x7D22;&#x5F15; i&#xFF0C;&#x5982;&#x679C; <code>sites[i] == i</code> &#x90A3;&#x4E48;&#x70B9; i &#x5C31;&#x662F;&#x67D0;&#x4E2A;&#x6811;&#x7684;&#x6839;&#x8282;&#x70B9;&#xFF0C;&#x5982;&#x679C; <code>sites[i] != i</code>&#xFF0C;&#x90A3;&#x4E48;&#x8868;&#x660E;&#x8FD9;&#x662F;&#x4E00;&#x4E2A;&#x5B50;&#x8282;&#x70B9;&#xFF0C;&#x8BE5;&#x8282;&#x70B9;&#x4E2D;&#x7684;&#x503C;&#x5C31;&#x662F;&#x5B83;&#x7236;&#x8282;&#x70B9;&#x7684;&#x7D22;&#x5F15;&#xFF0C;&#x901A;&#x8FC7;&#x7236;&#x8282;&#x70B9;&#xFF0C;&#x6211;&#x4EEC;&#x53EF;&#x4EE5;&#x9012;&#x5F52;&#x7684;&#x5411;&#x4E0A;&#x76F4;&#x5230;&#x627E;&#x5230;&#x6700;&#x7EC8;&#x7684;&#x6839;&#x8282;&#x70B9;&#x3002;&#x4E0B;&#x9762;&#x662F;&#x5B9E;&#x73B0; find &#x548C; union &#x7684;&#x65B9;&#x5F0F;&#xFF1A;</p>
+<ul>
+<li>&#x5BF9;&#x4E8E; <code>find(int p)</code>&#xFF0C;&#x5224;&#x65AD;&#x5F53;&#x524D;&#x70B9; p &#x662F;&#x5426;&#x4E3A;&#x6839;&#x8282;&#x70B9;&#xFF0C;&#x5982;&#x679C;&#x662F;&#x8FD4;&#x56DE; p&#xFF0C;&#x5426;&#x5219;&#x9012;&#x5F52;&#x7684;&#x5F80;&#x4E0A;&#x627E;&#x3002;&#x5728;&#x5411;&#x4E0A;&#x627E;&#x7684;&#x8FC7;&#x7A0B;&#x4E2D;&#xFF0C;&#x8FDB;&#x884C;&#x8DEF;&#x5F84;&#x538B;&#x7F29;&#xFF0C;&#x4E5F;&#x5C31;&#x662F;&#x5C06; p &#x6307;&#x5411;&#x5B83;&#x7684;&#x7956;&#x7236;&#x8282;&#x70B9;&#x3002;</li>
+<li>&#x5BF9;&#x4E8E; <code>union(int p, int q)</code>&#xFF0C;&#x9996;&#x5148;&#x627E;&#x5230; p &#x548C; q &#x5BF9;&#x5E94;&#x7684;&#x6839;&#x8282;&#x70B9;&#xFF0C;&#x5224;&#x65AD;&#x4E24;&#x8005;&#x662F;&#x5426;&#x76F8;&#x540C;&#x3002;&#x5982;&#x679C;&#x4E0D;&#x540C;&#x5219;&#x8FDB;&#x884C;&#x5408;&#x5E76;&#xFF0C;&#x5408;&#x5E76;&#x7684;&#x4F9D;&#x8D56;&#x7684;&#x5C06;&#x5C0F;&#x6811;&#x5408;&#x5E76;&#x5230;&#x5927;&#x6811;&#x4E0A;(&#x8FD9;&#x91CC;&#x7528;&#x4E00;&#x4E2A;&#x4E13;&#x95E8;&#x7684;&#x6570;&#x7EC4;&#x8BB0;&#x5F55;&#x4E86;&#x6BCF;&#x68F5;&#x6811;&#x7684;&#x5927;&#x5C0F;)&#x3002;</li>
+</ul>
+<p>&#x4E0B;&#x9762;&#x662F;&#x7B97;&#x6CD5;&#x5B9E;&#x73B0;</p>
+<pre class="language-"><code class="lang-java"><span class="token comment" spellcheck="true">/**
+ * Returns the component identifier for the component containing site {@code p}.
+ *
+ * @param  p the integer representing one site
+ * @return the component identifier for the component containing site {@code p}
+ * @throws IllegalArgumentException unless {@code 0 &lt;= p &lt; n}
+ */</span>
+<span class="token keyword">public</span> <span class="token keyword">int</span> <span class="token function">find</span><span class="token punctuation">(</span><span class="token keyword">int</span> p<span class="token punctuation">)</span> <span class="token punctuation">{</span>
+    <span class="token function">validate</span><span class="token punctuation">(</span>p<span class="token punctuation">)</span><span class="token punctuation">;</span>
+    <span class="token keyword">while</span> <span class="token punctuation">(</span>p <span class="token operator">!=</span> parent<span class="token punctuation">[</span>p<span class="token punctuation">]</span><span class="token punctuation">)</span> <span class="token punctuation">{</span>
+        parent<span class="token punctuation">[</span>p<span class="token punctuation">]</span> <span class="token operator">=</span> parent<span class="token punctuation">[</span>parent<span class="token punctuation">[</span>p<span class="token punctuation">]</span><span class="token punctuation">]</span><span class="token punctuation">;</span> <span class="token comment" spellcheck="true">// path compression by halving</span>
+        p <span class="token operator">=</span> parent<span class="token punctuation">[</span>p<span class="token punctuation">]</span><span class="token punctuation">;</span>
+    <span class="token punctuation">}</span>
+    <span class="token keyword">return</span> p<span class="token punctuation">;</span>
+<span class="token punctuation">}</span>
+
+<span class="token comment" spellcheck="true">/**
+ * Merges the component containing site {@code p} with the
+ * the component containing site {@code q}.
+ *
+ * @param  p the integer representing one site
+ * @param  q the integer representing the other site
+ * @throws IllegalArgumentException unless
+ *         both {@code 0 &lt;= p &lt; n} and {@code 0 &lt;= q &lt; n}
+ */</span>
+<span class="token keyword">public</span> <span class="token keyword">void</span> <span class="token function">union</span><span class="token punctuation">(</span><span class="token keyword">int</span> p<span class="token punctuation">,</span> <span class="token keyword">int</span> q<span class="token punctuation">)</span> <span class="token punctuation">{</span>
+    <span class="token keyword">int</span> rootP <span class="token operator">=</span> <span class="token function">find</span><span class="token punctuation">(</span>p<span class="token punctuation">)</span><span class="token punctuation">;</span>
+    <span class="token keyword">int</span> rootQ <span class="token operator">=</span> <span class="token function">find</span><span class="token punctuation">(</span>q<span class="token punctuation">)</span><span class="token punctuation">;</span>
+    <span class="token keyword">if</span> <span class="token punctuation">(</span>rootP <span class="token operator">==</span> rootQ<span class="token punctuation">)</span> <span class="token keyword">return</span><span class="token punctuation">;</span>
+
+    <span class="token comment" spellcheck="true">// make root of smaller rank point to root of larger rank</span>
+    <span class="token keyword">if</span> <span class="token punctuation">(</span>size<span class="token punctuation">[</span>rootP<span class="token punctuation">]</span> <span class="token operator">&lt;</span> size<span class="token punctuation">[</span>rootQ<span class="token punctuation">]</span><span class="token punctuation">)</span> <span class="token punctuation">{</span>
+        parent<span class="token punctuation">[</span>rootP<span class="token punctuation">]</span> <span class="token operator">=</span> rootQ<span class="token punctuation">;</span>
+        size<span class="token punctuation">[</span>rootQ<span class="token punctuation">]</span> <span class="token operator">+=</span> size<span class="token punctuation">[</span>rootP<span class="token punctuation">]</span><span class="token punctuation">;</span>
+    <span class="token punctuation">}</span>
+    <span class="token keyword">else</span> <span class="token punctuation">{</span>
+        parent<span class="token punctuation">[</span>rootQ<span class="token punctuation">]</span> <span class="token operator">=</span> rootP<span class="token punctuation">;</span>
+        size<span class="token punctuation">[</span>rootP<span class="token punctuation">]</span> <span class="token operator">+=</span> size<span class="token punctuation">[</span>rootQ<span class="token punctuation">]</span><span class="token punctuation">;</span>
+    <span class="token punctuation">}</span>
+    count<span class="token operator">--</span><span class="token punctuation">;</span>
+<span class="token punctuation">}</span>
+</code></pre>
+<h2 id="&#x5B8C;&#x6574;&#x5B9E;&#x73B0;"><a name="&#x5B8C;&#x6574;&#x5B9E;&#x73B0;" class="anchor-navigation-ex-anchor" href="#&#x5B8C;&#x6574;&#x5B9E;&#x73B0;"><i class="fa fa-link" aria-hidden="true"></i></a>&#x5B8C;&#x6574;&#x5B9E;&#x73B0;</h2>
+<p>&#x4E0B;&#x9762;&#x662F;&#x7B97;&#x6CD5;&#x7684;&#x5B8C;&#x6574;&#x5B9E;&#x73B0;&#xFF0C; <a href="https://algs4.cs.princeton.edu/code/edu/princeton/cs/algs4/UF.java.html" target="_blank">&#x6E90;&#x7801;&#x5730;&#x5740;</a>&#xFF1A;</p>
+<pre class="language-"><code class="lang-java"><span class="token comment" spellcheck="true">/******************************************************************************
+ *  Compilation:  javac UF.java
+ *  Execution:    java UF &lt; input.txt
+ *  Dependencies: StdIn.java StdOut.java
+ *  Data files:   https://algs4.cs.princeton.edu/15uf/tinyUF.txt
+ *                https://algs4.cs.princeton.edu/15uf/mediumUF.txt
+ *                https://algs4.cs.princeton.edu/15uf/largeUF.txt
+ *
+ *  Weighted quick-union by rank with path compression by halving.
+ *
+ *  % java UF &lt; tinyUF.txt
+ *  4 3
+ *  3 8
+ *  6 5
+ *  9 4
+ *  2 1
+ *  5 0
+ *  7 2
+ *  6 1
+ *  2 components
+ *
+ ******************************************************************************/</span>
+
+<span class="token keyword">package</span> edu<span class="token punctuation">.</span>princeton<span class="token punctuation">.</span>cs<span class="token punctuation">.</span>algs4<span class="token punctuation">;</span>
+
+
+<span class="token comment" spellcheck="true">/**
+ *  The {@code UF} class represents a &lt;em&gt;union&#x2013;find data type&lt;/em&gt;
+ *  (also known as the &lt;em&gt;disjoint-sets data type&lt;/em&gt;).
+ *  It supports the &lt;em&gt;union&lt;/em&gt; and &lt;em&gt;find&lt;/em&gt; operations,
+ *  along with a &lt;em&gt;connected&lt;/em&gt; operation for determining whether
+ *  two sites are in the same component and a &lt;em&gt;count&lt;/em&gt; operation that
+ *  returns the total number of components.
+ *  &lt;p&gt;
+ *  The union&#x2013;find data type models connectivity among a set of &lt;em&gt;n&lt;/em&gt;
+ *  sites, named 0 through &lt;em&gt;n&lt;/em&gt;&#x2013;1.
+ *  The &lt;em&gt;is-connected-to&lt;/em&gt; relation must be an
+ *  &lt;em&gt;equivalence relation&lt;/em&gt;:
+ *  &lt;ul&gt;
+ *  &lt;li&gt; &lt;em&gt;Reflexive&lt;/em&gt;: &lt;em&gt;p&lt;/em&gt; is connected to &lt;em&gt;p&lt;/em&gt;.
+ *  &lt;li&gt; &lt;em&gt;Symmetric&lt;/em&gt;: If &lt;em&gt;p&lt;/em&gt; is connected to &lt;em&gt;q&lt;/em&gt;,
+ *       then &lt;em&gt;q&lt;/em&gt; is connected to &lt;em&gt;p&lt;/em&gt;.
+ *  &lt;li&gt; &lt;em&gt;Transitive&lt;/em&gt;: If &lt;em&gt;p&lt;/em&gt; is connected to &lt;em&gt;q&lt;/em&gt;
+ *       and &lt;em&gt;q&lt;/em&gt; is connected to &lt;em&gt;r&lt;/em&gt;, then
+ *       &lt;em&gt;p&lt;/em&gt; is connected to &lt;em&gt;r&lt;/em&gt;.
+ *  &lt;/ul&gt;
+ *  &lt;p&gt;
+ *  An equivalence relation partitions the sites into
+ *  &lt;em&gt;equivalence classes&lt;/em&gt; (or &lt;em&gt;components&lt;/em&gt;). In this case,
+ *  two sites are in the same component if and only if they are connected.
+ *  Both sites and components are identified with integers between 0 and
+ *  &lt;em&gt;n&lt;/em&gt;&#x2013;1.
+ *  Initially, there are &lt;em&gt;n&lt;/em&gt; components, with each site in its
+ *  own component.  The &lt;em&gt;component identifier&lt;/em&gt; of a component
+ *  (also known as the &lt;em&gt;root&lt;/em&gt;, &lt;em&gt;canonical element&lt;/em&gt;, &lt;em&gt;leader&lt;/em&gt;,
+ *  or &lt;em&gt;set representative&lt;/em&gt;) is one of the sites in the component:
+ *  two sites have the same component identifier if and only if they are
+ *  in the same component.
+ *  &lt;ul&gt;
+ *  &lt;li&gt;&lt;em&gt;union&lt;/em&gt;(&lt;em&gt;p&lt;/em&gt;, &lt;em&gt;q&lt;/em&gt;) adds a
+ *      connection between the two sites &lt;em&gt;p&lt;/em&gt; and &lt;em&gt;q&lt;/em&gt;.
+ *      If &lt;em&gt;p&lt;/em&gt; and &lt;em&gt;q&lt;/em&gt; are in different components,
+ *      then it replaces
+ *      these two components with a new component that is the union of
+ *      the two.
+ *  &lt;li&gt;&lt;em&gt;find&lt;/em&gt;(&lt;em&gt;p&lt;/em&gt;) returns the component
+ *      identifier of the component containing &lt;em&gt;p&lt;/em&gt;.
+ *  &lt;li&gt;&lt;em&gt;connected&lt;/em&gt;(&lt;em&gt;p&lt;/em&gt;, &lt;em&gt;q&lt;/em&gt;)
+ *      returns true if both &lt;em&gt;p&lt;/em&gt; and &lt;em&gt;q&lt;/em&gt;
+ *      are in the same component, and false otherwise.
+ *  &lt;li&gt;&lt;em&gt;count&lt;/em&gt;() returns the number of components.
+ *  &lt;/ul&gt;
+ *  &lt;p&gt;
+ *  The component identifier of a component can change
+ *  only when the component itself changes during a call to
+ *  &lt;em&gt;union&lt;/em&gt;&#x2014;it cannot change during a call
+ *  to &lt;em&gt;find&lt;/em&gt;, &lt;em&gt;connected&lt;/em&gt;, or &lt;em&gt;count&lt;/em&gt;.
+ *  &lt;p&gt;
+ *  This implementation uses weighted quick union by rank with path compression
+ *  by halving.
+ *  Initializing a data structure with &lt;em&gt;n&lt;/em&gt; sites takes linear time.
+ *  Afterwards, the &lt;em&gt;union&lt;/em&gt;, &lt;em&gt;find&lt;/em&gt;, and &lt;em&gt;connected&lt;/em&gt;
+ *  operations take logarithmic time (in the worst case) and the
+ *  &lt;em&gt;count&lt;/em&gt; operation takes constant time.
+ *  Moreover, the amortized time per &lt;em&gt;union&lt;/em&gt;, &lt;em&gt;find&lt;/em&gt;,
+ *  and &lt;em&gt;connected&lt;/em&gt; operation has inverse Ackermann complexity.
+ *  For alternate implementations of the same API, see
+ *  {@link QuickUnionUF}, {@link QuickFindUF}, and {@link WeightedQuickUnionUF}.
+ *
+ *  &lt;p&gt;
+ *  For additional documentation, see &lt;a href=&quot;https://algs4.cs.princeton.edu/15uf&quot;&gt;Section 1.5&lt;/a&gt; of
+ *  &lt;i&gt;Algorithms, 4th Edition&lt;/i&gt; by Robert Sedgewick and Kevin Wayne.
+ *
+ *  @author Robert Sedgewick
+ *  @author Kevin Wayne
+ */</span>
+
+<span class="token keyword">public</span> <span class="token keyword">class</span> <span class="token class-name">UF</span> <span class="token punctuation">{</span>
+
+    <span class="token keyword">private</span> <span class="token keyword">int</span><span class="token punctuation">[</span><span class="token punctuation">]</span> parent<span class="token punctuation">;</span>  <span class="token comment" spellcheck="true">// parent[i] = parent of i</span>
+    <span class="token keyword">private</span> <span class="token keyword">byte</span><span class="token punctuation">[</span><span class="token punctuation">]</span> rank<span class="token punctuation">;</span>   <span class="token comment" spellcheck="true">// rank[i] = rank of subtree rooted at i (never more than 31)</span>
+    <span class="token keyword">private</span> <span class="token keyword">int</span> count<span class="token punctuation">;</span>     <span class="token comment" spellcheck="true">// number of components</span>
+
+    <span class="token comment" spellcheck="true">/**
+     * Initializes an empty union&#x2013;find data structure with {@code n} sites
+     * {@code 0} through {@code n-1}. Each site is initially in its own
+     * component.
+     *
+     * @param  n the number of sites
+     * @throws IllegalArgumentException if {@code n &lt; 0}
+     */</span>
+    <span class="token keyword">public</span> <span class="token function">UF</span><span class="token punctuation">(</span><span class="token keyword">int</span> n<span class="token punctuation">)</span> <span class="token punctuation">{</span>
+        <span class="token keyword">if</span> <span class="token punctuation">(</span>n <span class="token operator">&lt;</span> <span class="token number">0</span><span class="token punctuation">)</span> <span class="token keyword">throw</span> <span class="token keyword">new</span> <span class="token class-name">IllegalArgumentException</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+        count <span class="token operator">=</span> n<span class="token punctuation">;</span>
+        parent <span class="token operator">=</span> <span class="token keyword">new</span> <span class="token class-name">int</span><span class="token punctuation">[</span>n<span class="token punctuation">]</span><span class="token punctuation">;</span>
+        rank <span class="token operator">=</span> <span class="token keyword">new</span> <span class="token class-name">byte</span><span class="token punctuation">[</span>n<span class="token punctuation">]</span><span class="token punctuation">;</span>
+        <span class="token keyword">for</span> <span class="token punctuation">(</span><span class="token keyword">int</span> i <span class="token operator">=</span> <span class="token number">0</span><span class="token punctuation">;</span> i <span class="token operator">&lt;</span> n<span class="token punctuation">;</span> i<span class="token operator">++</span><span class="token punctuation">)</span> <span class="token punctuation">{</span>
+            parent<span class="token punctuation">[</span>i<span class="token punctuation">]</span> <span class="token operator">=</span> i<span class="token punctuation">;</span>
+            rank<span class="token punctuation">[</span>i<span class="token punctuation">]</span> <span class="token operator">=</span> <span class="token number">0</span><span class="token punctuation">;</span>
+        <span class="token punctuation">}</span>
+    <span class="token punctuation">}</span>
+
+    <span class="token comment" spellcheck="true">/**
+     * Returns the component identifier for the component containing site {@code p}.
+     *
+     * @param  p the integer representing one site
+     * @return the component identifier for the component containing site {@code p}
+     * @throws IllegalArgumentException unless {@code 0 &lt;= p &lt; n}
+     */</span>
+    <span class="token keyword">public</span> <span class="token keyword">int</span> <span class="token function">find</span><span class="token punctuation">(</span><span class="token keyword">int</span> p<span class="token punctuation">)</span> <span class="token punctuation">{</span>
+        <span class="token function">validate</span><span class="token punctuation">(</span>p<span class="token punctuation">)</span><span class="token punctuation">;</span>
+        <span class="token keyword">while</span> <span class="token punctuation">(</span>p <span class="token operator">!=</span> parent<span class="token punctuation">[</span>p<span class="token punctuation">]</span><span class="token punctuation">)</span> <span class="token punctuation">{</span>
+            parent<span class="token punctuation">[</span>p<span class="token punctuation">]</span> <span class="token operator">=</span> parent<span class="token punctuation">[</span>parent<span class="token punctuation">[</span>p<span class="token punctuation">]</span><span class="token punctuation">]</span><span class="token punctuation">;</span>    <span class="token comment" spellcheck="true">// path compression by halving</span>
+            p <span class="token operator">=</span> parent<span class="token punctuation">[</span>p<span class="token punctuation">]</span><span class="token punctuation">;</span>
+        <span class="token punctuation">}</span>
+        <span class="token keyword">return</span> p<span class="token punctuation">;</span>
+    <span class="token punctuation">}</span>
+
+    <span class="token comment" spellcheck="true">/**
+     * Returns the number of components.
+     *
+     * @return the number of components (between {@code 1} and {@code n})
+     */</span>
+    <span class="token keyword">public</span> <span class="token keyword">int</span> <span class="token function">count</span><span class="token punctuation">(</span><span class="token punctuation">)</span> <span class="token punctuation">{</span>
+        <span class="token keyword">return</span> count<span class="token punctuation">;</span>
+    <span class="token punctuation">}</span>
+
+    <span class="token comment" spellcheck="true">/**
+     * Returns true if the the two sites are in the same component.
+     *
+     * @param  p the integer representing one site
+     * @param  q the integer representing the other site
+     * @return {@code true} if the two sites {@code p} and {@code q} are in the same component;
+     *         {@code false} otherwise
+     * @throws IllegalArgumentException unless
+     *         both {@code 0 &lt;= p &lt; n} and {@code 0 &lt;= q &lt; n}
+     */</span>
+    <span class="token keyword">public</span> <span class="token keyword">boolean</span> <span class="token function">connected</span><span class="token punctuation">(</span><span class="token keyword">int</span> p<span class="token punctuation">,</span> <span class="token keyword">int</span> q<span class="token punctuation">)</span> <span class="token punctuation">{</span>
+        <span class="token keyword">return</span> <span class="token function">find</span><span class="token punctuation">(</span>p<span class="token punctuation">)</span> <span class="token operator">==</span> <span class="token function">find</span><span class="token punctuation">(</span>q<span class="token punctuation">)</span><span class="token punctuation">;</span>
+    <span class="token punctuation">}</span>
+
+    <span class="token comment" spellcheck="true">/**
+     * Merges the component containing site {@code p} with the
+     * the component containing site {@code q}.
+     *
+     * @param  p the integer representing one site
+     * @param  q the integer representing the other site
+     * @throws IllegalArgumentException unless
+     *         both {@code 0 &lt;= p &lt; n} and {@code 0 &lt;= q &lt; n}
+     */</span>
+    <span class="token keyword">public</span> <span class="token keyword">void</span> <span class="token function">union</span><span class="token punctuation">(</span><span class="token keyword">int</span> p<span class="token punctuation">,</span> <span class="token keyword">int</span> q<span class="token punctuation">)</span> <span class="token punctuation">{</span>
+        <span class="token keyword">int</span> rootP <span class="token operator">=</span> <span class="token function">find</span><span class="token punctuation">(</span>p<span class="token punctuation">)</span><span class="token punctuation">;</span>
+        <span class="token keyword">int</span> rootQ <span class="token operator">=</span> <span class="token function">find</span><span class="token punctuation">(</span>q<span class="token punctuation">)</span><span class="token punctuation">;</span>
+        <span class="token keyword">if</span> <span class="token punctuation">(</span>rootP <span class="token operator">==</span> rootQ<span class="token punctuation">)</span> <span class="token keyword">return</span><span class="token punctuation">;</span>
+
+        <span class="token comment" spellcheck="true">// make root of smaller rank point to root of larger rank</span>
+        <span class="token keyword">if</span> <span class="token punctuation">(</span>size<span class="token punctuation">[</span>rootP<span class="token punctuation">]</span> <span class="token operator">&lt;</span> size<span class="token punctuation">[</span>rootQ<span class="token punctuation">]</span><span class="token punctuation">)</span> <span class="token punctuation">{</span>
+            parent<span class="token punctuation">[</span>rootP<span class="token punctuation">]</span> <span class="token operator">=</span> rootQ<span class="token punctuation">;</span>
+            size<span class="token punctuation">[</span>rootQ<span class="token punctuation">]</span> <span class="token operator">+=</span> size<span class="token punctuation">[</span>rootP<span class="token punctuation">]</span><span class="token punctuation">;</span>
+        <span class="token punctuation">}</span>
+        <span class="token keyword">else</span> <span class="token punctuation">{</span>
+            parent<span class="token punctuation">[</span>rootQ<span class="token punctuation">]</span> <span class="token operator">=</span> rootP<span class="token punctuation">;</span>
+            size<span class="token punctuation">[</span>rootP<span class="token punctuation">]</span> <span class="token operator">+=</span> size<span class="token punctuation">[</span>rootQ<span class="token punctuation">]</span><span class="token punctuation">;</span>
+        <span class="token punctuation">}</span>
+        count<span class="token operator">--</span><span class="token punctuation">;</span>
+    <span class="token punctuation">}</span>
+
+    <span class="token comment" spellcheck="true">// validate that p is a valid index</span>
+    <span class="token keyword">private</span> <span class="token keyword">void</span> <span class="token function">validate</span><span class="token punctuation">(</span><span class="token keyword">int</span> p<span class="token punctuation">)</span> <span class="token punctuation">{</span>
+        <span class="token keyword">int</span> n <span class="token operator">=</span> parent<span class="token punctuation">.</span>length<span class="token punctuation">;</span>
+        <span class="token keyword">if</span> <span class="token punctuation">(</span>p <span class="token operator">&lt;</span> <span class="token number">0</span> <span class="token operator">||</span> p <span class="token operator">&gt;=</span> n<span class="token punctuation">)</span> <span class="token punctuation">{</span>
+            <span class="token keyword">throw</span> <span class="token keyword">new</span> <span class="token class-name">IllegalArgumentException</span><span class="token punctuation">(</span><span class="token string">&quot;index &quot;</span> <span class="token operator">+</span> p <span class="token operator">+</span> <span class="token string">&quot; is not between 0 and &quot;</span> <span class="token operator">+</span> <span class="token punctuation">(</span>n<span class="token operator">-</span><span class="token number">1</span><span class="token punctuation">)</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+        <span class="token punctuation">}</span>
+    <span class="token punctuation">}</span>
+
+    <span class="token comment" spellcheck="true">/**
+     * Reads in a an integer {@code n} and a sequence of pairs of integers
+     * (between {@code 0} and {@code n-1}) from standard input, where each integer
+     * in the pair represents some site;
+     * if the sites are in different components, merge the two components
+     * and print the pair to standard output.
+     *
+     * @param args the command-line arguments
+     */</span>
+    <span class="token keyword">public</span> <span class="token keyword">static</span> <span class="token keyword">void</span> <span class="token function">main</span><span class="token punctuation">(</span>String<span class="token punctuation">[</span><span class="token punctuation">]</span> args<span class="token punctuation">)</span> <span class="token punctuation">{</span>
+        <span class="token keyword">int</span> n <span class="token operator">=</span> StdIn<span class="token punctuation">.</span><span class="token function">readInt</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+        UF uf <span class="token operator">=</span> <span class="token keyword">new</span> <span class="token class-name">UF</span><span class="token punctuation">(</span>n<span class="token punctuation">)</span><span class="token punctuation">;</span>
+        <span class="token keyword">while</span> <span class="token punctuation">(</span><span class="token operator">!</span>StdIn<span class="token punctuation">.</span><span class="token function">isEmpty</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">)</span> <span class="token punctuation">{</span>
+            <span class="token keyword">int</span> p <span class="token operator">=</span> StdIn<span class="token punctuation">.</span><span class="token function">readInt</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+            <span class="token keyword">int</span> q <span class="token operator">=</span> StdIn<span class="token punctuation">.</span><span class="token function">readInt</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+            <span class="token keyword">if</span> <span class="token punctuation">(</span>uf<span class="token punctuation">.</span><span class="token function">connected</span><span class="token punctuation">(</span>p<span class="token punctuation">,</span> q<span class="token punctuation">)</span><span class="token punctuation">)</span> <span class="token keyword">continue</span><span class="token punctuation">;</span>
+            uf<span class="token punctuation">.</span><span class="token function">union</span><span class="token punctuation">(</span>p<span class="token punctuation">,</span> q<span class="token punctuation">)</span><span class="token punctuation">;</span>
+            StdOut<span class="token punctuation">.</span><span class="token function">println</span><span class="token punctuation">(</span>p <span class="token operator">+</span> <span class="token string">&quot; &quot;</span> <span class="token operator">+</span> q<span class="token punctuation">)</span><span class="token punctuation">;</span>
+        <span class="token punctuation">}</span>
+        StdOut<span class="token punctuation">.</span><span class="token function">println</span><span class="token punctuation">(</span>uf<span class="token punctuation">.</span><span class="token function">count</span><span class="token punctuation">(</span><span class="token punctuation">)</span> <span class="token operator">+</span> <span class="token string">&quot; components&quot;</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+    <span class="token punctuation">}</span>
+<span class="token punctuation">}</span>
+
+
+<span class="token comment" spellcheck="true">/******************************************************************************
+ *  Copyright 2002-2016, Robert Sedgewick and Kevin Wayne.
+ *
+ *  This file is part of algs4.jar, which accompanies the textbook
+ *
+ *      Algorithms, 4th edition by Robert Sedgewick and Kevin Wayne,
+ *      Addison-Wesley Professional, 2011, ISBN 0-321-57351-X.
+ *      http://algs4.cs.princeton.edu
+ *
+ *
+ *  algs4.jar is free software: you can redistribute it and/or modify
+ *  it under the terms of the GNU General Public License as published by
+ *  the Free Software Foundation, either version 3 of the License, or
+ *  (at your option) any later version.
+ *
+ *  algs4.jar is distributed in the hope that it will be useful,
+ *  but WITHOUT ANY WARRANTY; without even the implied warranty of
+ *  MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+ *  GNU General Public License for more details.
+ *
+ *  You should have received a copy of the GNU General Public License
+ *  along with algs4.jar.  If not, see http://www.gnu.org/licenses.
+ ******************************************************************************/</span>
+</code></pre>
+
+                                
+                                </section>
+                            
+    </div>
+    <div class="search-results">
+        <div class="has-results">
+            
+            <h1 class="search-results-title"><span class='search-results-count'></span> results matching "<span class='search-query'></span>"</h1>
+            <ul class="search-results-list"></ul>
+            
+        </div>
+        <div class="no-results">
+            
+            <h1 class="search-results-title">No results matching "<span class='search-query'></span>"</h1>
+            
+        </div>
+    </div>
+</div>
+
+                        </div>
+                    </div>
+                
+            </div>
+
+            
+                
+                <a href="../" class="navigation navigation-prev navigation-unique" aria-label="Previous page: 前言">
+                    <i class="fa fa-angle-left"></i>
+                </a>
+                
+                
+            
+        
+    </div>
+
+    <script>
+        var gitbook = gitbook || [];
+        gitbook.push(function() {
+            gitbook.page.hasChanged({"page":{"title":"并查集","level":"2","depth":0,"previous":{"title":"前言","level":"1","depth":0,"path":"README.md","ref":"README.md","articles":[]},"dir":"ltr"},"config":{"plugins":["-lunr","-search","-highlight","-livereload","search-plus@^0.0.11","simple-page-toc@0.1.1","github@^2.0.0","edit-link@^2.0.2","prism@^2.1.0","prism-themes@^0.0.2","anchors@^0.7.1","disqus","sitemap-general@^0.1.1","anchor-navigation-ex@0.1.8","favicon@^0.0.2","3-ba@^0.9.0","fancybox","github-buttons@2.1.0","katex","include-codeblock"],"root":".","styles":{"website":"styles/website.css","pdf":"styles/pdf.css","epub":"styles/epub.css","mobi":"styles/mobi.css","ebook":"styles/ebook.css","print":"styles/print.css"},"pluginsConfig":{"prism":{"css":["prism-themes/themes/prism-base16-ateliersulphurpool.light.css"]},"disqus":{"useIdentifier":false,"shortName":"book-2"},"fancybox":{"helpers":{"buttons":{}}},"github":{"url":"https://github.com/zhangjikai/"},"simple-page-toc":{"maxDepth":4,"skipFirstH1":true},"donate":{"wechat":"https://zhangjikai.com/resource/weixin.png","alipay":"https://zhangjikai.com/resource/alipay.png","title":"","button":"赏","alipayText":"支付宝打赏","wechatText":"微信打赏"},"sitemap-general":{"prefix":"http://www.zhangjikai.com"},"katex":{},"fontsettings":{"theme":"white","family":"sans","size":2},"anchor-navigation-ex":{"isRewritePageTitle":false,"tocLevel1Icon":"fa fa-hand-o-right","tocLevel2Icon":"fa fa-hand-o-right","tocLevel3Icon":"fa fa-hand-o-right"},"favicon":{"shortcut":"favicon.ico","bookmark":"favicon.ico"},"prism-themes":{},"github-buttons":{"repo":"zhangjikai/algorithm-learn","types":["star"],"size":"small"},"3-ba":{"configuration":"auto","token":"ff100361cdce95dd4c8fb96b4009f7bc"},"include-codeblock":{"check":false,"edit":false,"fixlang":false,"lang":"","template":"default","theme":"chrome","unindent":false},"sharing":{"facebook":true,"twitter":true,"google":false,"weibo":true,"instapaper":false,"vk":false,"all":["facebook","google","twitter","weibo","instapaper"]},"edit-link":{"label":"Edit This Page","base":"https://github.com/zhangjikai/algorithm-learn/edit/master"},"theme-default":{"styles":{"website":"styles/website.css","pdf":"styles/pdf.css","epub":"styles/epub.css","mobi":"styles/mobi.css","ebook":"styles/ebook.css","print":"styles/print.css"},"showLevel":true},"anchors":{},"search-plus":{}},"theme":"default","author":"zhangjikai","pdf":{"pageNumbers":true,"fontSize":12,"fontFamily":"Arial","paperSize":"a4","chapterMark":"pagebreak","pageBreaksBefore":"/","margin":{"right":62,"left":62,"top":56,"bottom":56}},"structure":{"langs":"LANGS.md","readme":"README.md","glossary":"GLOSSARY.md","summary":"SUMMARY.md"},"variables":{},"title":"algorithm learn","language":"zh-hans","output.name":"site","links":{"sidebar":{"Home":"http://www.zhangjikai.com"}},"gitbook":"3.2.2","description":"算法学习笔记"},"file":{"path":"union-find/README.md","mtime":"2017-11-19T09:47:00.147Z","type":"markdown"},"gitbook":{"version":"3.2.2","time":"2017-11-19T09:47:21.698Z"},"basePath":"..","book":{"language":""}});
+        });
+    </script>
+</div>
+
+        
+    <script src="../gitbook/gitbook.js"></script>
+    <script src="../gitbook/theme.js"></script>
+    
+        
+        <script src="../gitbook/gitbook-plugin-search-plus/jquery.mark.min.js"></script>
+        
+    
+        
+        <script src="../gitbook/gitbook-plugin-search-plus/search.js"></script>
+        
+    
+        
+        <script src="../gitbook/gitbook-plugin-github/plugin.js"></script>
+        
+    
+        
+        <script src="../gitbook/gitbook-plugin-edit-link/plugin.js"></script>
+        
+    
+        
+        <script src="https://cdnjs.cloudflare.com/ajax/libs/URI.js/1.16.1/URI.min.js"></script>
+        
+    
+        
+        <script src="../gitbook/gitbook-plugin-disqus/plugin.js"></script>
+        
+    
+        
+        <script src="../gitbook/gitbook-plugin-3-ba/plugin.js"></script>
+        
+    
+        
+        <script src="../gitbook/gitbook-plugin-fancybox/jquery.min.js"></script>
+        
+    
+        
+        <script src="../gitbook/gitbook-plugin-fancybox/jquery.mousewheel.pack.js"></script>
+        
+    
+        
+        <script src="../gitbook/gitbook-plugin-fancybox/jquery.fancybox.pack.js"></script>
+        
+    
+        
+        <script src="../gitbook/gitbook-plugin-fancybox/jquery.fancybox-buttons.js"></script>
+        
+    
+        
+        <script src="../gitbook/gitbook-plugin-fancybox/plugin.js"></script>
+        
+    
+        
+        <script src="../gitbook/gitbook-plugin-github-buttons/plugin.js"></script>
+        
+    
+        
+        <script src="../gitbook/gitbook-plugin-sharing/buttons.js"></script>
+        
+    
+        
+        <script src="../gitbook/gitbook-plugin-fontsettings/fontsettings.js"></script>
+        
+    
+
+    </body>
+</html>
+
